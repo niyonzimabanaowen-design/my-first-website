@@ -1,0 +1,322 @@
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Raleway:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --primary: #1e3a8a;      /* Rich navy blue */
+    --secondary: #3b82f6;    /* Sky blue */
+    --highlight: #facc15;    /* Soft gold */
+    --bg: #f9fafb;           /* Neutral background */
+    --glass-light: rgba(255, 255, 255, 0.7);
+    --glass-dark: rgba(30, 41, 59, 0.65);
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    color: #222;
+    background: var(--bg);
+    min-height: 100vh;
+    transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+  }
+
+  /* ==== BACKGROUND EFFECT ==== */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("kda.jpg") center/cover no-repeat;
+    filter: blur(12px);
+    opacity: 0.35;
+    z-index: -1;
+  }
+
+  /* ==== HEADER ==== */
+  header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    text-align: center;
+    padding: 3rem 1rem;
+    border-bottom: 4px solid var(--highlight);
+    position: relative;
+  }
+
+  header h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--highlight), #fff, var(--highlight));
+    -webkit-background-clip: text;
+    color: transparent;
+    background-size: 200%;
+    animation: shimmer 5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { background-position: 0%; }
+    50% { background-position: 100%; }
+  }
+
+  header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+  }
+
+  /* ==== NAV ==== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    background: rgba(56, 163, 165, 0.95);
+    padding: 0.8rem 1rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  nav a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--highlight);
+    transform: translateY(-2px);
+  }
+
+  .dark-toggle {
+    background: var(--highlight);
+    color: var(--primary);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .dark-toggle:hover { transform: scale(1.08); }
+
+  /* ==== HERO ==== */
+  .hero {
+    background: linear-gradient(to right, rgba(30,58,138,0.9), rgba(59,130,246,0.85));
+    color: #fff;
+    text-align: center;
+    padding: 3rem;
+    border-radius: 20px;
+    margin: 2rem auto;
+    max-width: 850px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+
+  .hero h2 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2rem;
+  }
+
+  /* ==== ACHIEVEMENT SECTION ==== */
+  .achievements-section {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: var(--glass-light);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    backdrop-filter: blur(20px);
+  }
+
+  .achievements-section h2 {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  .achievements-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .achievement-card {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    border: 1px solid rgba(255,255,255,0.3);
+    transform: translateY(10px);
+    opacity: 0;
+    animation: fadeInUp 0.8s forwards;
+    animation-delay: calc(var(--i) * 0.2s);
+    transition: all 0.4s ease;
+    position: relative;
+  }
+
+  .achievement-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 8px 30px rgba(59,130,246,0.25);
+  }
+
+  .achievement-photo {
+    height: 60%;
+    max-height: 220px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .achievement-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .achievement-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .achievement-card:hover .achievement-photo::after {
+    opacity: 1;
+  }
+
+  .achievement-photo:hover img {
+    transform: scale(1.1);
+  }
+
+  .achievement-info {
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .achievement-info .student {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .achievement-info .category {
+    background: var(--secondary);
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .achievement-info .desc {
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  /* ==== CONTACT FORM ==== */
+  form {
+    max-width: 600px;
+    margin: 3rem auto;
+    background: var(--glass-light);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    backdrop-filter: blur(15px);
+  }
+
+  form input, form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    background: rgba(255,255,255,0.8);
+    transition: border 0.3s;
+  }
+
+  form input:focus, form textarea:focus {
+    border-color: var(--secondary);
+    outline: none;
+  }
+
+  form button {
+    background: var(--secondary);
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+  }
+
+  form button:hover { background: var(--primary); }
+
+  /* ==== FOOTER ==== */
+  footer {
+    background: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+  }
+
+  /* ==== DARK MODE ==== */
+  body.dark-mode {
+    background: #0a0f1c;
+    color: #e5e7eb;
+  }
+
+  body.dark-mode .achievements-section,
+  body.dark-mode form {
+    background: var(--glass-dark);
+    color: #e2e8f0;
+  }
+
+  body.dark-mode .achievement-card {
+    background: rgba(17, 24, 39, 0.85);
+    color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  body.dark-mode .achievement-info .desc {
+    color: #cbd5e1;
+  }
+
+  body.dark-mode .category {
+    background: #38bdf8;
+    color: #0f172a;
+  }
+
+  /* ==== ANIMATIONS ==== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    .achievement-card { width: 85%; }
+  }
+</style>
